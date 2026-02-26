@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import moviesData from '../data/movies'
 import { Link } from 'react-router-dom'
 
-export default function Movies(){
+export default function Movies({favorites}){
 
   
   const[search, setSearch]=useState("")
