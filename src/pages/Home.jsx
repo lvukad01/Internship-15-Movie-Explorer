@@ -2,6 +2,8 @@ import {Link} from 'react-router-dom'
 
 export default function Home() {
   return (
+    <header>
+
     <div className='home'>
       <div className='title'>
         <h1>Movie Explorer</h1>
@@ -12,6 +14,6 @@ export default function Home() {
         <Link to="/favourites"> Favourites</Link>
       </div>
     </div>
-    
+    </header>
   )
 }

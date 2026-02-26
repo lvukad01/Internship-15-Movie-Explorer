@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 import moviesData from '../data/movies'
-
+import { Link } from 'react-router-dom'
 
 export default function Movies(){
 
@@ -10,6 +11,7 @@ export default function Movies(){
   const [loading, setLoading]=useState(true)
   const [error, setError]=useState("")
   const [sortBy, setSortBy]=useState("title")
+  const navigate = useNavigate();
 
   useEffect(()=>{
     const timer=setTimeout(()=>{
@@ -24,19 +26,7 @@ export default function Movies(){
     return()=>clearTimeout(timer)
   },[])
 
-  const filteredMovies=movies.filter(movie=>
-    movie.title.toLowerCase().includes(search.toLowerCase())
-  )
 
-  const sortedMovies=[...movies]
-  if(sortBy==="title")
-  {
-    sortedMovies.sort((a,b)=>a.title.localeCompare(b.title))
-  }else if(sortBy==="year"){
-    sortedMovies.sort((a,b)=>b.year-a.year);
-  }else{
-    sortedMovies.sort((a, b) => b.rating - a.rating);
-  }
   const filtered = movies.filter(movie =>
   movie.title.toLowerCase().includes(search.toLowerCase())
 );
@@ -69,12 +59,18 @@ export default function Movies(){
         </select>
 
         <div className='Movies'>
-         {filteredMovies.length==0 && search!==" " && (
+         {filteredAndSorted.length==0 && search!==" " && (
             <p>No movies found</p>
          )}
 
          {filteredAndSorted.map((movie)=>(
-            <p key={movie.id}>{movie.title} ({movie.year})</p>
+            <div className='movie'
+                key={movie.id}
+                onClick={()=>navigate(`/movies/${movie.id}`)}
+                style={{cursor:"pointer"}}
+                >
+                {movie.title} ({movie.year}) - Rating: {movie.rating}
+            </div>
          )
         )}
         </div>
