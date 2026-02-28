@@ -26,7 +26,8 @@ function App() {
       <Route path="/movies" element={<Movies favorites={favorites}/>}/>
       <Route path="/movies/:id" element={<MovieDetail 
         favorites={favorites} setFavorites={setFavorites}/>}/>
-      <Route path="/favourites" element={<Favourites/>}/>
+      <Route path="/favourites" element={<Favourites 
+        favorites={favorites} setFavorites={setFavorites}/>}/>
       <Route path="*" element={<NotFound/>}/>
     </Routes>
     )

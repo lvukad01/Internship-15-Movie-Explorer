@@ -2,7 +2,6 @@ import {useParams} from 'react-router-dom'
 import moviesData from '../data/movies'
 import favoriteOff from "../assets/favorite-off-svgrepo-com.svg"
 import favoriteOn from "../assets/favorite-svgrepo-com.svg"
-import {useState} from 'react'
 
 export default function MovieDetail({favorites, setFavorites}){
     const {id}=useParams()
@@ -16,7 +15,6 @@ export default function MovieDetail({favorites, setFavorites}){
     else{
         setFavorites([...favorites,movie.id])
     }
-    console.log(favorites)
    }
     return(
         <div className='movie_details'>
