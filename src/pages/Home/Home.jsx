@@ -5,12 +5,12 @@ export default function Home() {
   return (
     <header>
 
-    <div className='home'>
-      <div className='title'>
+    <div className={style.Home}>
+      <div className={style.title}>
         <h1>Movie Explorer</h1>
         <p>Pregledaj filmove i dodaj favorite</p>
       </div>
-      <div className='links'>
+      <div className={style.links}>
         <button>
           <Link to="/movies">Movies</Link>
         </button>
