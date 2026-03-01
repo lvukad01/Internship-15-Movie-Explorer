@@ -1,26 +1,28 @@
-import {useParams} from 'react-router-dom'
 import moviesData from '../../data/movies'
 import favoriteOn from "../../assets/icon/favorite-svgrepo-com.svg"
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import style from './Favourites.module.css'
+export default function Favourites({ favorites, setFavorites }) {
+  const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
 
-export default function Favourites({favorites, setFavorites}){
-    const [movies, setMovies]=useState([])
-    const navigate=useNavigate();
+  const handleFavorites = (movieId) => {
+    setFavorites(prev => prev.filter(id => id !== movieId));
+  }
 
+  useEffect(() => {
+    const favMovies = moviesData.filter(movie => favorites.includes(movie.id));
+    setMovies(favMovies);
+  }, [favorites]);
 
-   const handleFavorites=(movieId)=>{
-    setFavorites(prev=>
-        prev.filter(id=>id!==movieId)
-    )
-   }
-   useEffect(()=>{
-    const favMovies = moviesData.filter(movie =>
-        favorites.includes(movie.id))
-        setMovies(favMovies)
-
-       },[favorites])
+  if (movies.length === 0) {
+    return (
+      <div className={style.favoritesWrapperEmpty}>
+        <h2>No favorite movies</h2>
+      </div>
+    );
+  }
 
   return (
     <div className={style.favoritesWrapper}>
@@ -46,5 +48,5 @@ export default function Favourites({favorites, setFavorites}){
         </div>
       ))}
     </div>
-    )
+  );
 }

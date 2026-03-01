@@ -49,3 +49,12 @@
   width: 32px;
   height: 32px;
 }
+.favoritesWrapperEmpty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  text-align: center;
+  color: #fff;
+  font-size: 1.8rem;
+}
