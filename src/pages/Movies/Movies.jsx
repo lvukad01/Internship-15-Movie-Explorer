@@ -7,13 +7,24 @@ export default function Movies({favorites}){
 
   
   const[search, setSearch]=useState("")
+  const[searchInput,setSearchInput]=useState("")
   const [movies,setMovies]=useState([])
   const [loading, setLoading]=useState(true)
   const [error, setError]=useState("")
   const [sortBy, setSortBy]=useState("title")
 
   const searchRef=useRef(null)
+  const debounceRef=useRef(null)
 
+const handleSearch = (e) => {
+  setSearchInput(e.target.value)
+
+  if (debounceRef.current) clearTimeout(debounceRef.current)
+
+  debounceRef.current = setTimeout(() => {
+    setSearch(e.target.value)
+  }, 300)
+}
   const navigate = useNavigate();
 
     const filteredAndSorted = useMemo(()=>{
@@ -64,8 +75,8 @@ export default function Movies({favorites}){
           ref={searchRef}
           type="text"
           placeholder="Search movies..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}/>
+          value={searchInput}
+          onChange={handleSearch}/>
         <select value={sortBy} onChange={(e)=>setSortBy(e.target.value)}>
             <option value="title">Title</option>
             <option value="year">Year</option>
