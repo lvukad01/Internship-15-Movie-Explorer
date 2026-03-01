@@ -88,19 +88,21 @@ const handleSearch = (e) => {
             <p>No movies found</p>
          )}
 
-         {filteredAndSorted.map((movie)=>(
-            <div className={style.movie}
-                key={movie.id}
-                onClick={()=>navigate(`/movies/${movie.id}`)}
-                style={{cursor:"pointer"}}
-                >
-                  <img src={movie.img}/>
-                <div className={style.title}>
-                  {movie.title} ({movie.year}) - Rating: {movie.rating}
-                </div>
+        {filteredAndSorted.map((movie) => {
+          const isFav = favorites.includes(movie.id); 
+          return (
+            <div
+              key={movie.id}
+              className={`${style.movie} ${isFav ? style.favoriteMovie : ""}`}
+              onClick={() => navigate(`/movies/${movie.id}`)}
+            >
+              <img src={movie.img} alt={movie.title} />
+              <div className={style.title}>
+                {movie.title} ({movie.year}) - Rating: {movie.rating}
+              </div>
             </div>
-         )
-        )}
+          )
+        })}
         </div>
     </div>
   ) 

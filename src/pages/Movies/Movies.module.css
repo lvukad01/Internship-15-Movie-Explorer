@@ -68,3 +68,14 @@ img{
   font-size: 1.5rem;
   color: white;              
 }
+.favoriteMovie {
+  border: 3px solid #ffcc00; 
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+  transform: scale(1.03); 
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.favoriteMovie:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.9);
+}
