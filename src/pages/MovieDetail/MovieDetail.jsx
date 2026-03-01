@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom'
+import {useParams,useNavigate} from 'react-router-dom'
 import moviesData from '../../data/movies'
 import favoriteOff from "../../assets/icon/favorite-off-svgrepo-com.svg"
 import favoriteOn from "../../assets/icon/favorite-svgrepo-com.svg"
@@ -6,6 +6,7 @@ import style from './MovieDetail.module.css'
 import getYouTubeEmbed from  '../../helper/getYouTubeEmbed.js'
 
 export default function MovieDetail({favorites, setFavorites}){
+    const navigate = useNavigate();
     const {id}=useParams()
     const movie=moviesData.find((e)=>
     e.id==id)
@@ -26,11 +27,14 @@ export default function MovieDetail({favorites, setFavorites}){
             <div className={style.movieDetail}
                 key={movie.id}
                 >
+                <div className={style.back}>
+                    <button onClick={() => navigate(-1)}>← Back</button>
+                </div>
                 <div className={style.favorites}>
-                <button className={style.favoriteBtn} onClick={()=>handleFavorites() }>
-                <img className={style.favorite} src={isFavorite? favoriteOn:favoriteOff} 
-                    /> 
-                </button >
+                    <button className={style.favoriteBtn} onClick={()=>handleFavorites() }>
+                    <img className={style.favorite} src={isFavorite? favoriteOn:favoriteOff} 
+                        /> 
+                    </button >
                 </div>
                 <div className={style.title}>
                   <h1>{movie.title}  ({movie.year})</h1>
