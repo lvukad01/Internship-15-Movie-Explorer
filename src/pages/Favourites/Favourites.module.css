@@ -1,0 +1,51 @@
+.favoritesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.favoriteCard {
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 220px;
+  background-color: black;
+  border-radius: 15px;
+  padding: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.favoriteCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.movie img {
+  width: 200px;
+  height: 300px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.title {
+  margin: 10px 0;
+  text-align: center;
+  color: white;
+}
+
+.unFavoriteBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.favoriteIcon {
+  width: 32px;
+  height: 32px;
+}

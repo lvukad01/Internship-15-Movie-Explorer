@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import style from './Home.module.css'
 
 export default function Home() {
   return (
@@ -10,8 +11,12 @@ export default function Home() {
         <p>Pregledaj filmove i dodaj favorite</p>
       </div>
       <div className='links'>
-        <Link to="/movies">Movies</Link>
-        <Link to="/favourites"> Favourites</Link>
+        <button>
+          <Link to="/movies">Movies</Link>
+        </button>
+        <button>
+          <Link to="/favourites"> Favourites</Link>
+        </button>
       </div>
     </div>
     </header>

@@ -1,7 +1,7 @@
 
 import './App.css'
-import Home from './pages/Home.jsx'
-import Favourites from './pages/Favourites.jsx'
+import Home from './pages/Home/Home.jsx'
+import Favourites from './pages/Favourites/Favourites.jsx'
 import Movies from './pages/Movies/Movies.jsx'
 import MovieDetail from './pages/MovieDetail/MovieDetail.jsx'
 import NotFound from './pages/NotFound.jsx'
