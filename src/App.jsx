@@ -6,19 +6,13 @@ import Movies from './pages/Movies.jsx'
 import MovieDetail from './pages/MovieDetail.jsx'
 import NotFound from './pages/NotFound.jsx'
 import { Routes, Route } from 'react-router-dom'
-import {useState, useEffect} from 'react'
+import useLocalStorage from '../src/hooks/useLocalStorage.js'
 
 
 function App() {
-    const [favorites,setFavorites]=useState(()=>
-    {
-      const saved=localStorage.getItem("favorites");
-      return saved ? JSON.parse(saved):[];
-    });
+    const [favorites,setFavorites]=useLocalStorage("favorites",[]);
     
-    useEffect(()=>{
-      localStorage.setItem("favorites",JSON.stringify(favorites))
-    },[favorites])
+
 
   return (
     <Routes>
