@@ -60,3 +60,11 @@ img{
     margin: 10px;
 }
 
+.loading, .error {
+  display: flex;              
+  justify-content: center;  
+  align-items: center;     
+  min-height: 80vh;           
+  font-size: 1.5rem;
+  color: white;              
+}

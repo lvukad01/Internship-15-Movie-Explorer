@@ -49,10 +49,10 @@ export default function Movies({favorites}){
 
   })
   if(loading)
-    return <p>Loading movies...</p>
+    return <p className={style.loading}>Loading movies...</p>
 
   if(error)
-    return <p>{error}</p>
+    return <p className={style.error}>{error}</p>
 
 
 
