@@ -1,7 +1,7 @@
 import {useParams} from 'react-router-dom'
 import moviesData from '../data/movies'
-import favoriteOff from "../assets/favorite-off-svgrepo-com.svg"
-import favoriteOn from "../assets/favorite-svgrepo-com.svg"
+import favoriteOff from "../assets/icon/favorite-off-svgrepo-com.svg"
+import favoriteOn from "../assets/icon/favorite-svgrepo-com.svg"
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 

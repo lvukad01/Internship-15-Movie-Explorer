@@ -1,6 +1,7 @@
 import {useEffect, useState, useRef,useMemo} from 'react'
 import { useNavigate } from 'react-router-dom'
-import moviesData from '../data/movies'
+import moviesData from '../../data/movies'
+import style from './Movies.module.css'
 
 export default function Movies({favorites}){
 
@@ -56,8 +57,10 @@ export default function Movies({favorites}){
 
 
   return  (
-    <div className='Movies-wrapper'>
-        <input
+    <div className={style.movieCard}>
+      <h1>Movies</h1>
+      <div className={style.searchbar}>
+          <input
           ref={searchRef}
           type="text"
           placeholder="Search movies..."
@@ -68,19 +71,22 @@ export default function Movies({favorites}){
             <option value="year">Year</option>
             <option value="rating">Rating</option>
         </select>
-
-        <div className='Movies'>
+      </div>
+        <div className={style.movies}>
          {filteredAndSorted.length==0 && search!==" " && (
             <p>No movies found</p>
          )}
 
          {filteredAndSorted.map((movie)=>(
-            <div className='movie'
+            <div className={style.movie}
                 key={movie.id}
                 onClick={()=>navigate(`/movies/${movie.id}`)}
                 style={{cursor:"pointer"}}
                 >
-                {movie.title} ({movie.year}) - Rating: {movie.rating}
+                  <img src={movie.img}/>
+                <div className={style.title}>
+                  {movie.title} ({movie.year}) - Rating: {movie.rating}
+                </div>
             </div>
          )
         )}

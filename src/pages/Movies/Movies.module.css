@@ -1,0 +1,57 @@
+body{
+    background-color: rgb(39, 42, 42);
+    color:aliceblue;
+    padding: 20px;
+
+}
+h1{
+    text-align: center;
+}
+.searchbar{
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.searchbar input{
+    width:350px;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.searchbar select{
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;  
+}
+.movies{
+    display: flex;
+    margin-left:20px ;
+    flex-wrap: wrap;
+    gap:16px;
+    padding: 10px;
+    border: 10px;
+}
+.movie{
+    align-items: center;
+    width:220px;
+    padding: 20px;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    border: 5px;
+    margin: 5px;
+    border-radius: 15px;
+}
+.movie img{
+    padding: 7px;
+}
+.movie:hover {
+    transform: scale(1.05);     
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);    
+}
+
+.title{
+    margin: 10px;
+}
