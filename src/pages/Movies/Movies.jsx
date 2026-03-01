@@ -2,6 +2,7 @@ import {useEffect, useState, useRef,useMemo} from 'react'
 import { useNavigate } from 'react-router-dom'
 import moviesData from '../../data/movies'
 import style from './Movies.module.css'
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 export default function Movies({favorites}){
 
@@ -11,7 +12,7 @@ export default function Movies({favorites}){
   const [movies,setMovies]=useState([])
   const [loading, setLoading]=useState(true)
   const [error, setError]=useState("")
-  const [sortBy, setSortBy]=useState("title")
+  const [sortBy, setSortBy]=useLocalStorage("sortBy","title")
 
   const searchRef=useRef(null)
   const debounceRef=useRef(null)
@@ -35,10 +36,13 @@ const handleSearch = (e) => {
 
         if (sortBy === "title") {
         sorted.sort((a, b) => a.title.localeCompare(b.title));
+        setSortBy("title")
         } else if (sortBy === "year") {
         sorted.sort((a, b) => b.year - a.year);
+        setSortBy("year")
         } else if (sortBy === "rating") {
         sorted.sort((a, b) => b.rating - a.rating);
+        setSortBy("rating")
     }
     return sorted
     },[movies,search,sortBy])
