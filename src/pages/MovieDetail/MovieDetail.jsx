@@ -49,6 +49,7 @@ export default function MovieDetail({favorites, setFavorites}){
                     <div className={style.content}>
                         <h3>Genre: {movie.genre}</h3>
                         <p>{movie.info}</p>
+                        <p>Rating: {movie.rating}/10</p>
                     </div>
                 </div>
 
