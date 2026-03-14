@@ -1,6 +1,6 @@
 import {useEffect, useState, useRef,useMemo} from 'react'
 import { useNavigate } from 'react-router-dom'
-import moviesData from '../../data/movies'
+import axios from 'axios'
 import style from './Movies.module.css'
 import useLocalStorage from '../../hooks/useLocalStorage'
 
@@ -47,18 +47,20 @@ const handleSearch = (e) => {
     return sorted
     },[movies,search,sortBy])
 
-        useEffect(()=>{
-    const timer=setTimeout(()=>{
-        try{
-            setMovies(moviesData)
-            setLoading(false)
-        }catch(err){
-            setError("Something went wrong")
-            setLoading(false)
-        }
-    },1000)
-    return()=>clearTimeout(timer)
-  },[])
+  useEffect(()=>{
+    const fetchMovies=async()=>{
+      try{
+        const response=await axios.get('http://localhost:3000/movies')
+        setMovies(response.data)
+        setLoading(false)
+      }catch(err){
+        console.error(err)
+        setError("Failed to fetch movies from server")
+        setLoading(false)
+      }
+    };
+    fetchMovies();
+  },[]);
   useEffect(()=>{
     searchRef.current?.focus()
 
@@ -100,7 +102,7 @@ const handleSearch = (e) => {
               className={`${style.movie} ${isFav ? style.favoriteMovie : ""}`}
               onClick={() => navigate(`/movies/${movie.id}`)}
             >
-              <img src={movie.img} alt={movie.title} />
+              <img src={movie.posterUrl} alt={movie.title} />
               <div className={style.title}>
                 {movie.title} ({movie.year}) - Rating: {movie.rating}
               </div>
