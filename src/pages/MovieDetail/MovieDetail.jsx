@@ -10,7 +10,7 @@ export default function MovieDetail() {
     const navigate = useNavigate();
     const { id } = useParams();
     
-    const { data: movie, loading, error, setData } = useFetch(`/movies/${id}`);
+    const { data: movie, loading, error, setData } = useFetch(`/movies/${id}?_expand=genre`);
 
     const handleFavorites = async () => {
         const newStatus = !movie.isFavorite;
@@ -27,7 +27,7 @@ export default function MovieDetail() {
     if (error || (!loading && !movie)) {
         return (
             <div className={style.errorContainer}>
-                <h2>Film nije pronađen.</h2>
+                <h2>Movie not found.</h2>
                 <button className={style.backBtn} onClick={() => navigate('/movies')}>Back</button>
             </div>
         );
@@ -58,10 +58,14 @@ export default function MovieDetail() {
                 <img src={movie.posterUrl} alt={movie.title} className={style.poster} />
                 
                 <div className={style.content}>
-                    <h3>Žanr: {movie.genre}</h3>
-                    <p>{movie.description}</p>
-                    <p className={style.rating}>Ocjena: ⭐ {movie.rating}/10</p>
-                    <p>Režija: {movie.director}</p>
+                <h3>
+                    Genre: {movie.genres && movie.genres.length > 0 
+                    ? movie.genres.map(g => g.name).join(', ') 
+                    : 'No genres'}
+                </h3>                    
+                <p>{movie.description}</p>
+                    <p className={style.rating}>Rating: ⭐ {movie.rating}/10</p>
+                    <p>Producer: {movie.director}</p>
                 </div>
 
                 {embedUrl && (
