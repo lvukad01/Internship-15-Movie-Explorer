@@ -2,6 +2,8 @@
 
 Movie Explorer is a React SPA for browsing movies, viewing details, and managing favorite movies.
 
+⚠️ This frontend requires the [**Movie Explorer API backend**](https://github.com/lvukad01/Internship-17-Movie-Explorer-Api) to be running.
+
 ---
 
 ## 🚀 Features
