@@ -17,14 +17,14 @@ export default function Favourites() {
     }
   };
 
-  if (loading) return <div className={style.empty}><h2>Učitavanje...</h2></div>;
-  if (error) return <div className={style.empty}><h2>Greška: {error}</h2></div>;
+  if (loading) return <div className={style.empty}><h2>Loading...</h2></div>;
+  if (error) return <div className={style.empty}><h2>Error: {error}</h2></div>;
 
   return (
     <div className={style.container}>
-      <h1>Moji Favoriti</h1>
+      <h1>My favorites</h1>
       {movies.length === 0 ? (
-        <div className={style.empty}><h2>Nema omiljenih filmova.</h2></div>
+        <div className={style.empty}><h2>No favorite movies.</h2></div>
       ) : (
         <div className={style.grid}>
           {movies.map(movie => (

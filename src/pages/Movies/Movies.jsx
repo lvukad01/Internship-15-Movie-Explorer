@@ -9,13 +9,12 @@ export default function Movies() {
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
-  const [sortBy, setSortBy] = useLocalStorage("sortBy", "title");
+  const [sortBy, setSortBy] = useLocalStorage("sortBy", "title_asc");
 
   const searchRef = useRef(null);
   const debounceRef = useRef(null);
 
   const { data: movies, loading: moviesLoading, error: moviesError } = useFetch('/movies', { 
-    search, 
     genre: selectedGenre 
   });
 
@@ -31,19 +30,46 @@ export default function Movies() {
 
   const filteredAndSorted = useMemo(() => {
     if (!movies) return [];
-    let sorted = [...movies];
-    if (sortBy === "title") sorted.sort((a, b) => a.title.localeCompare(b.title));
-    else if (sortBy === "year") sorted.sort((a, b) => b.year - a.year);
-    else if (sortBy === "rating") sorted.sort((a, b) => b.rating - a.rating);
-    return sorted;
-  }, [movies, sortBy]);
+    
+    // 1. Filter by Title OR Year
+    let result = movies.filter(movie => 
+      movie.title.toLowerCase().includes(search.toLowerCase()) ||
+      movie.year.toString().includes(search)
+    );
+
+    // 2. Clearer Sort Logic
+    switch (sortBy) {
+      case "title_asc":
+        result.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "title_desc":
+        result.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case "year_newest":
+        result.sort((a, b) => b.year - a.year);
+        break;
+      case "year_oldest":
+        result.sort((a, b) => a.year - b.year);
+        break;
+      case "rating_highest":
+        result.sort((a, b) => b.rating - a.rating);
+        break;
+      case "rating_lowest":
+        result.sort((a, b) => a.rating - b.rating);
+        break;
+      default:
+        result.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    
+    return result;
+  }, [movies, search, sortBy]);
 
   useEffect(() => {
     searchRef.current?.focus();
   }, []);
 
-  if (moviesLoading) return <p className={style.loading}>Loading...</p>;
-  if (moviesError) return <p className={style.error}>{moviesError}</p>;
+  if (moviesLoading) return <div className={style.loading}>Loading movies...</div>;
+  if (moviesError) return <div className={style.error}>{moviesError}</div>;
 
   return (
     <div className={style.container}>
@@ -56,11 +82,12 @@ export default function Movies() {
         setSelectedGenre={setSelectedGenre}
         sortBy={sortBy}
         setSortBy={setSortBy}
-        searchRef={searchRef}/>
+        searchRef={searchRef}
+      />
 
       <div className={style.grid}>
         {filteredAndSorted.length === 0 ? (
-          <p>No movies found.</p>
+          <p className={style.noResults}>No movies found matching your criteria.</p>
         ) : (
           filteredAndSorted.map(movie => (
             <MovieCard key={movie.id} movie={movie} />

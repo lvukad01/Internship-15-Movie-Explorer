@@ -1,52 +1,69 @@
-header {
+.heroWrapper {
   width: 100%;
-  height: 100vh;
+  min-height: calc(100vh - 70px);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(39, 42, 42);
+  background-color: #1a1a1a;
 }
 
-.Home {
+.home {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 20px;
+  gap: 30px;
+  padding: 20px;
 }
 
-.Home .title h1 {
+.title h1 {
   color: white;
-  font-size: 60px;
+  font-size: clamp(40px, 8vw, 70px);
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.Home .title p {
-  color: aliceblue;
-  font-size: 25px;
-  margin: 5px 0 0 0;
+.title p {
+  color: #bbb;
+  font-size: 1.2rem;
+  margin-top: 10px;
 }
 
-.Home .links {
+.links {
   display: flex;
   gap: 20px;
 }
 
-.Home .links button {
-  background-color: black;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.Home .links button:hover {
-  background-color: #333;
-}
-
-.Home .links button a {
+.navBtn {
+  background-color: #ff3d3d;
   color: white;
   text-decoration: none;
   font-weight: bold;
+  padding: 15px 35px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: 2px solid #ff3d3d;
+}
+
+.navBtn:hover {
+  background-color: transparent;
+  color: #ff3d3d;
+  transform: translateY(-3px);
+}
+
+.navBtnSecondary {
+  background-color: transparent;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 15px 35px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: 2px solid #444;
+}
+
+.navBtnSecondary:hover {
+  border-color: white;
+  transform: translateY(-3px);
 }

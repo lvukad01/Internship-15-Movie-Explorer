@@ -11,26 +11,47 @@ export default function SearchBar({
   searchRef 
 }) {
   return (
-    <div className={style.searchbar}>
-      <input
-        ref={searchRef}
-        type="text"
-        placeholder="Search movies..."
-        value={searchInput}
-        onChange={handleSearch}/>
+    <div className={style.searchBar}>
+      <div className={style.inputGroup}>
+        <input
+          ref={searchRef}
+          type="text"
+          placeholder="Search by title or year..."
+          value={searchInput}
+          onChange={handleSearch}
+          className={style.searchInput}
+        />
+      </div>
 
-      <select value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)}>
-        <option value="">All genre</option>
-        {genres?.map(g => (
-          <option key={g.id} value={g.name}>{g.name}</option>
-        ))}
-      </select>
+      <div className={style.filterGroup}>
+        <select 
+          value={selectedGenre} 
+          onChange={(e) => setSelectedGenre(e.target.value)}
+          className={style.select}
+        >
+          <option value="">All Genres</option>
+          {genres?.map(g => (
+            <option key={g.id} value={g.name}>{g.name}</option>
+          ))}
+        </select>
 
-      <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-        <option value="title">Name (A-Z)</option>
-        <option value="year">Year (Most recent)</option>
-        <option value="rating">Rating (Highest)</option>
-      </select>
+        <div className={style.sortGroup}>
+          <label htmlFor="sort">Sort by:</label>
+          <select 
+            id="sort"
+            value={sortBy} 
+            onChange={(e) => setSortBy(e.target.value)}
+            className={style.select}
+          >
+            <option value="title_asc">Title (A-Z)</option>
+            <option value="title_desc">Title (Z-A)</option>
+            <option value="year_newest">Year (Newest)</option>
+            <option value="year_oldest">Year (Oldest)</option>
+            <option value="rating_highest">Rating (Highest)</option>
+            <option value="rating_lowest">Rating (Lowest)</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 }
