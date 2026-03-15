@@ -1,38 +1,99 @@
-.favorites{
-    text-align: right;
-}
-.favorite{
-  width:50px;
-  height:50px;
+.movieDetail {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.favorite.active{
-  display: none;
-}
-.media{
-    margin-bottom: 30px;
+.header {
     display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-bottom: 20px;
 }
-iframe{
-    width:600px;
-    height: 411px;
-    margin-right:40px ;
-    border-radius: 10px;
-}
-.movieDetail .media img{
-    width:276px;
-    height:411px;
-    border-radius: 10px;
-    margin-right:40px ;
 
+.backBtn {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    padding: 8px 20px;
+    border-radius: 8px;
+    transition: background 0.3s;
 }
-.movieDetail .content{
+
+.backBtn:hover {
+    background-color: #ff3d3d;
+}
+
+.favoriteBtn {
+    background: #efe4e4;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.favoriteIconDetail {
+    width: 35px;
+    height: 35px;
+    filter: drop-shadow(0 0 5px rgba(255, 61, 61, 0.5));
+}
+
+.favoriteBtn:hover {
+    transform: scale(1.1);
+    background-color: #333;
+}
+
+.mediaRow {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: nowrap; 
+}
+
+.poster {
+    width: 276px;
+    height: 411px;
+    border-radius: 15px;
+    object-fit: cover;
+    flex-shrink: 0; 
+}
+
+.content {
     background-color: black;
     width: 300px;
+    height:411px;
+    padding-left: 25px;
+    padding-right: 25px;
     border-radius: 20px;
-    padding: 20px;
-    justify-self:center;
+    flex-shrink: 0;
+    border: 1px solid #333;
 }
-.movieDetail .content p{
-    font-size: 20px;
+
+.videoWrapper {
+    flex-shrink: 0;
+}
+
+iframe {
+    width: 600px;
+    height: 411px;
+    border-radius: 15px;
+    border: 1px solid #333;
+}
+
+.title h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 1200px) {
+    .mediaRow {
+        flex-wrap: wrap; 
+    }
 }

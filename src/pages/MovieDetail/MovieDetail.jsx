@@ -1,5 +1,4 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 import favoriteOff from "../../assets/icon/favorite-off-svgrepo-com.svg"
 import favoriteOn from "../../assets/icon/favorite-svgrepo-com.svg"
 import style from './MovieDetail.module.css'
@@ -16,51 +15,57 @@ export default function MovieDetail() {
     const handleFavorites = async () => {
         const newStatus = !movie.isFavorite;
         try {
-            await api.patch(`/movies/${id}`, {
-                isFavorite: newStatus
-            });
+            await api.patch(`/movies/${id}`, { isFavorite: newStatus });
             setData({ ...movie, isFavorite: newStatus });
         } catch (err) {
             console.error("Error updating favorites:", err);
         }
     }
 
-    if (loading) return <p className={style.loading}>Loading movie details...</p>;
-    if (error) return <p className={style.error}>{error}</p>;
-    if (!movie) return <p>Movie not found.</p>;
+    if (loading) return <div className={style.loading}>Loading...</div>;
+    
+    if (error || (!loading && !movie)) {
+        return (
+            <div className={style.errorContainer}>
+                <h2>Film nije pronađen.</h2>
+                <button className={style.backBtn} onClick={() => navigate('/movies')}>Back</button>
+            </div>
+        );
+    }
 
     const embedUrl = getYouTubeEmbed(movie.video);
 
     return (
         <div className={style.movieDetail}>
-            <div className={style.back}>
-                <button onClick={() => navigate(-1)}>← Back</button>
+            <div className={style.header}>
+                <button className={style.backBtn} onClick={() => navigate(-1)}>← Back</button>
+                <div className={style.favorites}>
+                    <button className={style.favoriteBtn} onClick={handleFavorites}>
+                        <img 
+                            className={style.favoriteIconDetail} 
+                            src={movie.isFavorite ? favoriteOn : favoriteOff} 
+                            alt="fav" 
+                        />
+                    </button>
+                </div>
             </div>
             
-            <div className={style.favorites}>
-                <button className={style.favoriteBtn} onClick={handleFavorites}>
-                    <img 
-                        className={style.favorite} 
-                        src={movie.isFavorite ? favoriteOn : favoriteOff} 
-                        alt="fav" 
-                    />
-                </button>
-            </div>
-
             <div className={style.title}>
                 <h1>{movie.title} ({movie.year})</h1>
             </div>
 
-            <div className={style.media}>
-                <img src={movie.posterUrl} alt={movie.title} />
+            <div className={style.mediaRow}>
+                <img src={movie.posterUrl} alt={movie.title} className={style.poster} />
+                
                 <div className={style.content}>
-                    <h3>Genre: {movie.genre}</h3>
+                    <h3>Žanr: {movie.genre}</h3>
                     <p>{movie.description}</p>
-                    <p>Rating: {movie.rating}/10</p>
-                    <p>Director: {movie.director}</p>
+                    <p className={style.rating}>Ocjena: ⭐ {movie.rating}/10</p>
+                    <p>Režija: {movie.director}</p>
                 </div>
+
                 {embedUrl && (
-                    <div className={style.video}>
+                    <div className={style.videoWrapper}>
                         <iframe 
                             src={embedUrl} 
                             title="trailer" 

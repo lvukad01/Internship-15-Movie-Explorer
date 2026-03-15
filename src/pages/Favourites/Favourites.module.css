@@ -1,92 +1,51 @@
-.favoritesWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  justify-content: flex-start;
+.container {
   max-width: 1400px;
   margin: 0 auto;
+  padding: 40px 20px;
 }
 
-.favoriteCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: calc(20% - 16px);
-  flex: 0 0 calc(20% - 16px);
-  box-sizing: border-box;
-  background-color: #1a1a1a;
-  border-radius: 15px;
-  padding: 15px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.favoriteCard:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-}
-
-.movie {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  cursor: pointer;
-}
-
-.movie img {
-  width: 100%;
-  height: 280px;
-  border-radius: 10px;
-  object-fit: cover;
-  display: block;
-  margin-bottom: 12px;
-}
-
-.title {
-  color: white;
+.container h1 {
   text-align: center;
-  font-weight: bold;
-  font-size: 0.9rem;
-  margin-bottom: 10px;
-  min-height: 2.5em;
+  color: #fff;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.grid {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  flex-wrap: wrap;
+  /* Centriranje kako bi grid izgledao profesionalno bez obzira na broj kartica */
+  justify-content: center; 
+  gap: 25px;
+  padding: 20px;
 }
 
-.unFavoriteBtn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
+.empty {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s ease;
-  margin-top: auto;
-}
-
-.favoriteIcon {
-  width: 30px;
-  height: 30px;
-  filter: drop-shadow(0 0 5px rgba(255, 61, 61, 0.4));
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.unFavoriteBtn:hover .favoriteIcon {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 10px rgba(255, 61, 61, 0.8));
-}
-
-.favoritesWrapperEmpty {
-  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 60vh;
   text-align: center;
-  color: #fff;
-  font-size: 1.8rem;
+  color: #bbb;
+}
+
+.empty h2 {
+  font-size: 2rem;
+  border: 2px dashed #444;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+/* Responzivnost: Ako je ekran jako mali, h1 se smanjuje */
+@media (max-width: 600px) {
+  .container h1 {
+    font-size: 1.8rem;
+  }
+  
+  .grid {
+    gap: 15px;
+  }
 }

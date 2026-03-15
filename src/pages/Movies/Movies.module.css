@@ -1,81 +1,42 @@
-body{
-    background-color: rgb(39, 42, 42);
-    color:aliceblue;
-    padding: 20px;
-
-}
-h1{
-    text-align: center;
-}
-.searchbar{
-    text-align: center;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 10px;
-}
-.searchbar input{
-    width:350px;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 10px;
-}
-.searchbar select{
-    padding: 5px;
-    margin: 10px;
-    border-radius: 10px;  
-}
-.movies{
-    display: flex;
-    margin-left:20px ;
-    flex-wrap: wrap;
-    gap:16px;
-    padding: 10px;
-    border: 10px;
-}
-.movie{
-    align-items: center;
-    width:220px;
-    padding: 20px;
-    padding-top: 15px;
-    display: flex;
-    flex-direction: column;
-    background-color: black;
-    border: 5px;
-    margin: 5px;
-    border-radius: 15px;
-}
-.movie img{
-    padding: 7px;
-}
-img{
-  width: 200px;
-  height: 300px;
-}
-.movie:hover {
-    transform: scale(1.05);     
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);    
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.title{
-    margin: 10px;
+.container h1 {
+  text-align: center;
+  color: aliceblue;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center; 
 }
 
 .loading, .error {
-  display: flex;              
-  justify-content: center;  
-  align-items: center;     
-  min-height: 80vh;           
-  font-size: 1.5rem;
-  color: white;              
-}
-.favoriteMovie {
-  border: 3px solid #ffcc00; 
-  box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
-  transform: scale(1.03); 
-  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  font-size: 1.8rem;
+  color: #ffcc00;
+  text-align: center;
 }
 
-.favoriteMovie:hover {
-  transform: scale(1.05); 
-  box-shadow: 0 0 20px rgba(255, 204, 0, 0.9);
+.error {
+  color: #ff4d4d;
+}
+
+.grid p {
+  font-size: 1.2rem;
+  color: #bbb;
+  margin-top: 50px;
 }
