@@ -1,52 +1,49 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useState, useEffect } from 'react'
 import favoriteOff from "../../assets/icon/favorite-off-svgrepo-com.svg"
 import favoriteOn from "../../assets/icon/favorite-svgrepo-com.svg"
 import style from './MovieDetail.module.css'
 import getYouTubeEmbed from '../../helper/getYouTubeEmbed.js'
 import api from '../../api/axiosInstance'
-
+import useFetch from '../../hooks/useFetch'
 
 export default function MovieDetail() {
     const navigate = useNavigate();
-    const { id } = useParams()
-    const [movie, setMovie] = useState(null)
+    const { id } = useParams();
+    
+    const { data: movie, loading, error, setData } = useFetch(`/movies/${id}`);
 
-    useEffect(() => {
-        axios.get(`http://localhost:3000/movies/${id}`)
-            .then(res => setMovie(res.data))
-            .catch(err => console.error(err))
-    }, [id])
-
-    if (!movie) return <p className={style.loading}>Loading movie details...</p>;
-
-
-    const handleFavorites = async() => {
+    const handleFavorites = async () => {
         const newStatus = !movie.isFavorite;
-        
         try {
             await api.patch(`/movies/${id}`, {
                 isFavorite: newStatus
             });
-            setMovie({ ...movie, isFavorite: newStatus });
-
+            setData({ ...movie, isFavorite: newStatus });
         } catch (err) {
-            console.error("Error loading favorites:", err);
+            console.error("Error updating favorites:", err);
         }
     }
+
+    if (loading) return <p className={style.loading}>Loading movie details...</p>;
+    if (error) return <p className={style.error}>{error}</p>;
+    if (!movie) return <p>Movie not found.</p>;
 
     const embedUrl = getYouTubeEmbed(movie.video);
 
     return (
-        <div className={style.movieDetail} key={movie.id}>
+        <div className={style.movieDetail}>
             <div className={style.back}>
                 <button onClick={() => navigate(-1)}>← Back</button>
             </div>
             
             <div className={style.favorites}>
-                <button className={style.favoriteBtn} onClick={() => handleFavorites()}>
-                    <img className={style.favorite} src={movie.isFavorite ? favoriteOn : favoriteOff} alt="fav" />
+                <button className={style.favoriteBtn} onClick={handleFavorites}>
+                    <img 
+                        className={style.favorite} 
+                        src={movie.isFavorite ? favoriteOn : favoriteOff} 
+                        alt="fav" 
+                    />
                 </button>
             </div>
 
@@ -63,12 +60,16 @@ export default function MovieDetail() {
                     <p>Director: {movie.director}</p>
                 </div>
                 {embedUrl && (
-                <div className={style.video}>
-                    <iframe src={embedUrl} title="trailer" frameBorder="0" allowFullScreen></iframe>
-                </div>
-           )}
+                    <div className={style.video}>
+                        <iframe 
+                            src={embedUrl} 
+                            title="trailer" 
+                            frameBorder="0" 
+                            allowFullScreen
+                        ></iframe>
+                    </div>
+                )}
             </div>
-
         </div>
     )
 }
