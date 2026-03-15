@@ -6,7 +6,7 @@ import favoriteOn from "../../assets/icon/favorite-svgrepo-com.svg"
 import style from './MovieDetail.module.css'
 import getYouTubeEmbed from '../../helper/getYouTubeEmbed.js'
 
-export default function MovieDetail({ favorites, setFavorites }) {
+export default function MovieDetail() {
     const navigate = useNavigate();
     const { id } = useParams()
     const [movie, setMovie] = useState(null)
@@ -17,16 +17,19 @@ export default function MovieDetail({ favorites, setFavorites }) {
             .catch(err => console.error(err))
     }, [id])
 
-
     if (!movie) return <p className={style.loading}>Loading movie details...</p>;
 
-    const isFavorite = favorites.includes(movie.id);
 
-    const handleFavorites = () => {
-        if (isFavorite) {
-            setFavorites(favorites.filter((e) => e !== movie.id))
-        } else {
-            setFavorites([...favorites, movie.id])
+    const handleFavorites = async() => {
+        const newStatus = !movie.isFavorite;
+        
+        try {
+            await axios.patch(`http://localhost:3000/movies/${id}`, {
+                isFavorite: newStatus
+            });
+                        setMovie({ ...movie, isFavorite: newStatus });
+        } catch (err) {
+            console.error("Error loading favorites:", err);
         }
     }
 
@@ -40,7 +43,7 @@ export default function MovieDetail({ favorites, setFavorites }) {
             
             <div className={style.favorites}>
                 <button className={style.favoriteBtn} onClick={() => handleFavorites()}>
-                    <img className={style.favorite} src={isFavorite ? favoriteOn : favoriteOff} alt="fav" />
+                    <img className={style.favorite} src={movie.isFavorite ? favoriteOn : favoriteOff} alt="fav" />
                 </button>
             </div>
 

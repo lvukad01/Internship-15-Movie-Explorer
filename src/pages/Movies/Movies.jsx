@@ -4,28 +4,31 @@ import axios from 'axios'
 import style from './Movies.module.css'
 import useLocalStorage from '../../hooks/useLocalStorage'
 
-export default function Movies({favorites}){
+export default function Movies(){
 
   
   const[search, setSearch]=useState("")
   const[searchInput,setSearchInput]=useState("")
   const [movies,setMovies]=useState([])
   const [loading, setLoading]=useState(true)
+  const [genres, setGenres] = useState([])
+  const [selectedGenre, setSelectedGenre] = useState("")
   const [error, setError]=useState("")
   const [sortBy, setSortBy]=useLocalStorage("sortBy","title")
 
   const searchRef=useRef(null)
   const debounceRef=useRef(null)
 
-const handleSearch = (e) => {
-  setSearchInput(e.target.value)
+  const handleSearch = (e) => {
+    setSearchInput(e.target.value)
 
-  if (debounceRef.current) clearTimeout(debounceRef.current)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
 
-  debounceRef.current = setTimeout(() => {
-    setSearch(e.target.value)
-  }, 300)
-}
+    debounceRef.current = setTimeout(() => {
+      setSearch(e.target.value)
+    }, 300)
+  }
+
   const navigate = useNavigate();
 
     const filteredAndSorted = useMemo(()=>{
@@ -45,12 +48,23 @@ const handleSearch = (e) => {
         setSortBy("rating")
     }
     return sorted
-    },[movies,search,sortBy])
+    },[movies,search,sortBy,setSortBy])
+
+    useEffect(()=>{
+      axios.get('http://localhost:3000/genres')
+        .then(res=> setGenres(res.data))
+        .catch(err=> console.error("Error loading genres",err))
+    },[]);
 
   useEffect(()=>{
     const fetchMovies=async()=>{
       try{
-        const response=await axios.get('http://localhost:3000/movies')
+        const response=await axios.get('http://localhost:3000/movies',{
+          params:{
+            search: search,
+            genre: selectedGenre
+          }
+        })
         setMovies(response.data)
         setLoading(false)
       }catch(err){
@@ -60,11 +74,12 @@ const handleSearch = (e) => {
       }
     };
     fetchMovies();
-  },[]);
+  },[search,selectedGenre]);
+
   useEffect(()=>{
     searchRef.current?.focus()
-
   })
+
   if(loading)
     return <p className={style.loading}>Loading movies...</p>
 
@@ -83,6 +98,14 @@ const handleSearch = (e) => {
           placeholder="Search movies..."
           value={searchInput}
           onChange={handleSearch}/>
+
+        <select value={selectedGenre} onChange={(e)=> setSelectedGenre(e.target.value)}>
+          <option value="">All Genres</option>
+          {genres.map(g =>(
+            <option key={g.id} value={g.name}>{g.name}</option>
+          ))}
+        </select>
+
         <select value={sortBy} onChange={(e)=>setSortBy(e.target.value)}>
             <option value="title">Title</option>
             <option value="year">Year</option>
@@ -95,7 +118,7 @@ const handleSearch = (e) => {
          )}
 
         {filteredAndSorted.map((movie) => {
-          const isFav = favorites.includes(movie.id); 
+          const isFav = movie.isFavorite; 
           return (
             <div
               key={movie.id}

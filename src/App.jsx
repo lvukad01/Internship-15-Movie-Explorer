@@ -17,9 +17,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />}/>
-      <Route path="/movies" element={<Movies favorites={favorites}/>}/>
-      <Route path="/movies/:id" element={<MovieDetail 
-        favorites={favorites} setFavorites={setFavorites}/>}/>
+      <Route path="/movies" element={<Movies/>}/>
+      <Route path="/movies/:id" element={<MovieDetail />}/>
       <Route path="/favourites" element={<Favourites 
         favorites={favorites} setFavorites={setFavorites}/>}/>
       <Route path="*" element={<NotFound/>}/>
