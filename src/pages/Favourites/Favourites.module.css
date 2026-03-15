@@ -7,15 +7,15 @@
 }
 
 .favoriteCard {
-  position: relative; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 220px;
-  background-color: black;
+  width: 230px;
+  background-color: #1a1a1a;
   border-radius: 15px;
   padding: 15px;
   transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
 }
 
 .favoriteCard:hover {
@@ -27,28 +27,49 @@
   width: 200px;
   height: 300px;
   border-radius: 10px;
-  margin-bottom: 10px;
+}
+
+.movieInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  gap: 8px;
 }
 
 .title {
-  margin: 10px 0;
+  margin: 0;
   text-align: center;
   color: white;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .unFavoriteBtn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   background: transparent;
   border: none;
   cursor: pointer;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
 }
 
 .favoriteIcon {
   width: 32px;
   height: 32px;
+  filter: drop-shadow(0 0 5px rgba(255, 61, 61, 0.3));
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
+
+.unFavoriteBtn:hover .favoriteIcon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px rgba(255, 61, 61, 0.8));
+}
+
 .favoritesWrapperEmpty {
   display: flex;
   justify-content: center;

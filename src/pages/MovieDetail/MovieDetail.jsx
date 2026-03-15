@@ -27,7 +27,8 @@ export default function MovieDetail() {
             await axios.patch(`http://localhost:3000/movies/${id}`, {
                 isFavorite: newStatus
             });
-                        setMovie({ ...movie, isFavorite: newStatus });
+            setMovie({ ...movie, isFavorite: newStatus });
+            
         } catch (err) {
             console.error("Error loading favorites:", err);
         }

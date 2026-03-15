@@ -9,18 +9,14 @@ import { Routes, Route } from 'react-router-dom'
 import useLocalStorage from '../src/hooks/useLocalStorage.js'
 
 
-function App() {
-    const [favorites,setFavorites]=useLocalStorage("favorites",[]);
-    
-
+function App() {    
 
   return (
     <Routes>
       <Route path="/" element={<Home />}/>
       <Route path="/movies" element={<Movies/>}/>
       <Route path="/movies/:id" element={<MovieDetail />}/>
-      <Route path="/favourites" element={<Favourites 
-        favorites={favorites} setFavorites={setFavorites}/>}/>
+      <Route path="/favourites" element={<Favourites/>}/>
       <Route path="*" element={<NotFound/>}/>
     </Routes>
     )
