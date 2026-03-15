@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import favoriteOn from "../../assets/icon/favorite-svgrepo-com.svg";
 import style from './Favourites.module.css';
+import api from '../../api/axiosInstance'
+
 
 export default function Favourites() {
     const [movies, setMovies] = useState([]);
@@ -26,13 +28,13 @@ const handleFavorites = async (movieId) => {
         const fetchFavoriteMovies = async () => {
             try {
                 setLoading(true);
-                const res = await axios.get('http://localhost:3000/movies');
+                const res = await api.get('movies');
                 
                 const favMovies = res.data.filter(movie => movie.isFavorite === true);
                 
                 setMovies(favMovies);
             } catch (err) {
-                console.error("Greška pri dohvaćanju favorita:", err);
+                console.error("Error occurred loading favorites:", err);
             } finally {
                 setLoading(false);
             }

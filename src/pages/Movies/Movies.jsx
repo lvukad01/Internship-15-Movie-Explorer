@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import style from './Movies.module.css'
 import useLocalStorage from '../../hooks/useLocalStorage'
+import api from '../../api/axiosInstance'
+
 
 export default function Movies(){
-
   
   const[search, setSearch]=useState("")
   const[searchInput,setSearchInput]=useState("")
@@ -51,7 +52,7 @@ export default function Movies(){
     },[movies,search,sortBy,setSortBy])
 
     useEffect(()=>{
-      axios.get('http://localhost:3000/genres')
+      api.get('genres')
         .then(res=> setGenres(res.data))
         .catch(err=> console.error("Error loading genres",err))
     },[]);
@@ -59,12 +60,8 @@ export default function Movies(){
   useEffect(()=>{
     const fetchMovies=async()=>{
       try{
-        const response=await axios.get('http://localhost:3000/movies',{
-          params:{
-            search: search,
-            genre: selectedGenre
-          }
-        })
+        const response=await api.get('/movies', { params: { search, genre: selectedGenre } })
+
         setMovies(response.data)
         setLoading(false)
       }catch(err){

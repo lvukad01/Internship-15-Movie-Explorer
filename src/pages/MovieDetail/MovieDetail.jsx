@@ -5,6 +5,8 @@ import favoriteOff from "../../assets/icon/favorite-off-svgrepo-com.svg"
 import favoriteOn from "../../assets/icon/favorite-svgrepo-com.svg"
 import style from './MovieDetail.module.css'
 import getYouTubeEmbed from '../../helper/getYouTubeEmbed.js'
+import api from '../../api/axiosInstance'
+
 
 export default function MovieDetail() {
     const navigate = useNavigate();
@@ -24,11 +26,11 @@ export default function MovieDetail() {
         const newStatus = !movie.isFavorite;
         
         try {
-            await axios.patch(`http://localhost:3000/movies/${id}`, {
+            await api.patch(`/movies/${id}`, {
                 isFavorite: newStatus
             });
             setMovie({ ...movie, isFavorite: newStatus });
-            
+
         } catch (err) {
             console.error("Error loading favorites:", err);
         }
@@ -60,13 +62,13 @@ export default function MovieDetail() {
                     <p>Rating: {movie.rating}/10</p>
                     <p>Director: {movie.director}</p>
                 </div>
-            </div>
-
-        {embedUrl && (
+                {embedUrl && (
                 <div className={style.video}>
                     <iframe src={embedUrl} title="trailer" frameBorder="0" allowFullScreen></iframe>
                 </div>
            )}
+            </div>
+
         </div>
     )
 }
