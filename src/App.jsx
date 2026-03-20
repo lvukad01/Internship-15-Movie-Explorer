@@ -4,7 +4,8 @@ import Movies from './pages/Movies/Movies';
 import Favourites from './pages/Favourites/Favourites';
 import MovieDetail from './pages/MovieDetail/MovieDetail';
 import Home from './pages/Home/Home'
-import Login from './pages/Login/Login'
+import Login from './pages/Auth/Login'
+import Register from './pages/Auth/Register'
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/auth/login" element={<Login/>} />
+          <Route path="/auth/register" element={<Register/>} />
           <Route path="/" element={<Home/>} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/favorites" element={<Favourites />} />

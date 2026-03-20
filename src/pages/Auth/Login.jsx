@@ -1,6 +1,6 @@
 import { useState } from "react";
 import api from "../../api/axiosInstance";
-import style from './Login.module.css'
+import style from './Auth.module.css'
 
 export default function Login(){
     const [email,setEmail]=useState("")
