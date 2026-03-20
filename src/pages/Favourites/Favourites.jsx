@@ -1,36 +1,49 @@
 import style from './Favourites.module.css';
 import api from '../../api/axiosInstance';
-import useFetch from '../../hooks/useFetch';
 import MovieCard from '../../components/MovieCard/MovieCard';
+import { useEffect,useState } from 'react';
 
 export default function Favourites() {
-  const { data: allMovies, loading, error, setData } = useFetch('/movies');
+  const [favorites,setFavorites]=useState([]);
+  const [loading,setLoading]=useState(true);
 
-  const movies = allMovies ? allMovies.filter(movie => movie.isFavorite) : [];
+  useEffect(()=>{
+    const fetchFavorites=async()=>{
+      try{
+        const res=await api.get('/favorites');
+        setFavorites(res.data);
+      }catch(err){
+        console.error("Error ", err)
+      }finally{
+        setLoading(false);
+      }
+    }
+    fetchFavorites();
+  },[])
+
 
   const handleRemoveFavorite = async (movieId) => {
     try {
-      await api.patch(`/movies/${movieId}`, { isFavorite: false });
-      setData(prev => prev.map(m => m.id === movieId ? { ...m, isFavorite: false } : m));
+      await api.delete(`/favorites/${movieId}`);
+      setFavorites(prev=>prev.filter(fav=>fav.movieId!=movieId));
     } catch (err) {
-      console.error("Greška pri uklanjanju:", err);
+      console.error("Error occurred while removing from favorites:", err);
     }
   };
 
   if (loading) return <div className={style.empty}><h2>Loading...</h2></div>;
-  if (error) return <div className={style.empty}><h2>Error: {error}</h2></div>;
 
   return (
     <div className={style.container}>
       <h1>My favorites</h1>
-      {movies.length === 0 ? (
+      {favorites.length === 0 ? (
         <div className={style.empty}><h2>No favorite movies.</h2></div>
       ) : (
         <div className={style.grid}>
-          {movies.map(movie => (
+          {favorites.map(fav => (
             <MovieCard 
-              key={movie.id} 
-              movie={movie} 
+              key={fav.id} 
+              movie={fav.movie} 
               onFavoriteClick={handleRemoveFavorite}
               showRemoveBtn={true}
             />

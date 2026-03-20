@@ -4,6 +4,8 @@ import Movies from './pages/Movies/Movies';
 import Favourites from './pages/Favourites/Favourites';
 import MovieDetail from './pages/MovieDetail/MovieDetail';
 import Home from './pages/Home/Home'
+import Login from './pages/Login/Login'
+
 
 function App() {
   return (
@@ -11,6 +13,7 @@ function App() {
       <Navbar />
       <div className="container">
         <Routes>
+          <Route path="/auth/login" element={<Login/>} />
           <Route path="/" element={<Home/>} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/favorites" element={<Favourites />} />
