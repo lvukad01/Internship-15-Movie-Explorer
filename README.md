@@ -1,16 +1,58 @@
-# React + Vite
+# 🎬 Movie Explorer (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Movie Explorer is a React SPA for browsing movies, viewing details, and managing favorite movies.
 
-Currently, two official plugins are available:
+⚠️ This frontend requires the [**Movie Explorer API backend**](https://github.com/lvukad01/Internship-17-Movie-Explorer-Api) to be running.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Search movies by title
+* Movie list with sorting and genre filtering
+* Movie detail page
+* Add / remove favorites (stored in localStorage)
+* Loading, error and empty states
+* Debounced search
+* Responsive UI with CSS Modules
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🧠 Hooks
+
+* useEffect – data fetching simulation
+* useMemo – sorting & filtering optimization
+* useRef – search input focus & debounce
+* Custom hooks: `useFetch`
+
+---
+
+## 🧭 Routes
+
+* `/` — Home
+* `/movies` — Movies
+* `/movies/:id` — Movie details
+* `/favorites` — Favorites
+* `*` — NotFound
+
+---
+
+## ⚙️ Setup
+
+```bash
+npm install
+npm run dev
+```
+
+App runs at **http://localhost:5173**
+
+---
+
+## 📁 Structure
+
+```
+src/components
+src/pages
+src/hooks
+src/data
+```
