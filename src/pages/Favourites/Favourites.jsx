@@ -6,13 +6,14 @@ import { useEffect,useState } from 'react';
 export default function Favourites() {
   const [favorites,setFavorites]=useState([]);
   const [loading,setLoading]=useState(true);
+  const navigate = useNavigate();
 
   useEffect(()=>{
 
     const token=localStorage.getItem('token')
 
     if(!token){
-      window.location.href='/auth/login';
+      navigate('/auth/login');
       return;
     }
 
@@ -27,7 +28,7 @@ export default function Favourites() {
       }
     }
     fetchFavorites();
-  },[])
+  },[navigate])
 
 
   const handleRemoveFavorite = async (movieId) => {

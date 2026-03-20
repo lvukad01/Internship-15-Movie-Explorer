@@ -15,12 +15,11 @@ export default function MovieDetail() {
     const { data: movie, loading, error, setData } = useFetch(`/movies/${id}?_expand=genre`);
     useEffect(()=>{
     const checkFavoriteStatus = async () => {
-                const userId = localStorage.getItem('userId');
                 const token = localStorage.getItem('token');
-                if (!userId || !token) return;
+                if ( !token) return;
 
                 try {
-                    const res = await api.get(`/favorites?userId=${userId}`);
+                    const res = await api.get(`/favorites`);
                     const found = res.data.some(fav => fav.movieId === Number(id));
                     setIsFavorite(found);
                 } catch (err) {
@@ -33,10 +32,9 @@ export default function MovieDetail() {
 
     const handleFavorites = async () => {
         const token=localStorage.getItem('token')
-        const userId=localStorage.getItem('userId')
         if(!token){
             alert("Sign in to favorite a movie")
-            window.location.href='/auth/login'
+            navigate('/auth/login')
             return;
         }
         try {
@@ -45,7 +43,6 @@ export default function MovieDetail() {
                         setIsFavorite(false); 
                     } else {
                         await api.post(`/favorites`, { 
-                            userId: Number(userId), 
                             movieId: Number(id) 
                         });
                         setIsFavorite(true);

@@ -6,6 +6,7 @@ import MovieDetail from './pages/MovieDetail/MovieDetail';
 import Home from './pages/Home/Home'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
+import Admin from './pages/AdminPage/AdminPage'
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Navbar />
       <div className="container">
         <Routes>
+          <Route path="/admin" element={<Admin/>} />
           <Route path="/auth/login" element={<Login/>} />
           <Route path="/auth/register" element={<Register/>} />
           <Route path="/" element={<Home/>} />
