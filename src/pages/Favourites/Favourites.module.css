@@ -16,7 +16,6 @@
 .grid {
   display: flex;
   flex-wrap: wrap;
-  /* Centriranje kako bi grid izgledao profesionalno bez obzira na broj kartica */
   justify-content: center; 
   gap: 25px;
   padding: 20px;
@@ -39,7 +38,6 @@
   border-radius: 20px;
 }
 
-/* Responzivnost: Ako je ekran jako mali, h1 se smanjuje */
 @media (max-width: 600px) {
   .container h1 {
     font-size: 1.8rem;
