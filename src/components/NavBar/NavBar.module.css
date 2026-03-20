@@ -39,3 +39,18 @@
   border-bottom: 2px solid #ff3d3d;
   padding-bottom: 5px;
 }
+.logoutBtn {
+  background: none;
+  border: 1px solid white; 
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.logoutBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

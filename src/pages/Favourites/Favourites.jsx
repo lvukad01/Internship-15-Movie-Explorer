@@ -2,6 +2,7 @@ import style from './Favourites.module.css';
 import api from '../../api/axiosInstance';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import { useEffect,useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Favourites() {
   const [favorites,setFavorites]=useState([]);

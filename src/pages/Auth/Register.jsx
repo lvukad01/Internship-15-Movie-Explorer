@@ -12,7 +12,7 @@ export default function Register() {
             await api.post('/auth/register', { email, password });
             
             alert("Successful registration.");
-            window.location.href = "/auth/login"; 
+            window.location.href = "/login"; 
         } catch (err) {
             alert("Registration failed: " + (err.response?.data?.message || "Try again"));
         }

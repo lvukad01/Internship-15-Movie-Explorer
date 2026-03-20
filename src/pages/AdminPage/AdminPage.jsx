@@ -1,10 +1,25 @@
 import { useState, useEffect } from 'react';
 import api from '../../api/axiosInstance';
 import style from './AdminPage.module.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminPage() {
     const [movies, setMovies] = useState([]);
     const [isEditing, setIsEditing] = useState(null);
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem('token');
+    let isAdmin = false;
+
+    if (token) {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            isAdmin = payload.role === 'ADMIN';
+        } catch (e) {
+            console.error("Token error", e);
+        }
+    }
+
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -16,8 +31,13 @@ export default function AdminPage() {
     });
 
     useEffect(() => {
-        fetchMovies();
-    }, []);
+        const tkn = localStorage.getItem('token');
+        if (!tkn) {
+            navigate('/login'); 
+        } else {
+            fetchMovies();
+        }
+    }, [navigate]);
 
     const fetchMovies = async () => {
         try {
@@ -84,24 +104,26 @@ export default function AdminPage() {
         <div className={style.adminContainer}>
             <h1>Movie Management</h1>
             
-            <form onSubmit={handleSubmit} className={style.form}>
-                <h2>{isEditing ? "Edit Movie" : "Add New Movie"}</h2>
-                <input value={formData.title} placeholder="Title" onChange={e => setFormData({...formData, title: e.target.value})} required />
-                <input value={formData.director} placeholder="Director" onChange={e => setFormData({...formData, director: e.target.value})} required />
-                <input value={formData.year} type="number" placeholder="Year" onChange={e => setFormData({...formData, year: e.target.value})} required />
-                <input value={formData.rating} type="number" step="0.1" placeholder="Rating" onChange={e => setFormData({...formData, rating: e.target.value})} required />
-                <input value={formData.posterUrl} placeholder="Poster URL" onChange={e => setFormData({...formData, posterUrl: e.target.value})} required />
-                <textarea value={formData.description} placeholder="Description" onChange={e => setFormData({...formData, description: e.target.value})} required />
-                
-                <div className={style.buttonGroup}>
-                    <button type="submit" className={style.submitBtn}>
-                        {isEditing ? "Update Movie" : "Save Movie"}
-                    </button>
-                    {isEditing && (
-                        <button type="button" className={style.cancelBtn} onClick={resetForm}>Cancel</button>
-                    )}
-                </div>
-            </form>
+            {isAdmin && (
+                <form onSubmit={handleSubmit} className={style.form}>
+                    <h2>{isEditing ? "Edit Movie" : "Add New Movie"}</h2>
+                    <input value={formData.title} placeholder="Title" onChange={e => setFormData({...formData, title: e.target.value})} required />
+                    <input value={formData.director} placeholder="Director" onChange={e => setFormData({...formData, director: e.target.value})} required />
+                    <input value={formData.year} type="number" placeholder="Year" onChange={e => setFormData({...formData, year: e.target.value})} required />
+                    <input value={formData.rating} type="number" step="0.1" placeholder="Rating" onChange={e => setFormData({...formData, rating: e.target.value})} required />
+                    <input value={formData.posterUrl} placeholder="Poster URL" onChange={e => setFormData({...formData, posterUrl: e.target.value})} required />
+                    <textarea value={formData.description} placeholder="Description" onChange={e => setFormData({...formData, description: e.target.value})} required />
+                    
+                    <div className={style.buttonGroup}>
+                        <button type="submit" className={style.submitBtn}>
+                            {isEditing ? "Update Movie" : "Save Movie"}
+                        </button>
+                        {isEditing && (
+                            <button type="button" className={style.cancelBtn} onClick={resetForm}>Cancel</button>
+                        )}
+                    </div>
+                </form>
+            )}
 
             <table className={style.table}>
                 <thead>
@@ -117,8 +139,14 @@ export default function AdminPage() {
                             <td>{movie.title}</td>
                             <td>{movie.year}</td>
                             <td>
-                                <button className={style.editBtn} onClick={() => handleEditClick(movie)}>Edit</button>
-                                <button className={style.deleteBtn} onClick={() => handleDelete(movie.id)}>Delete</button>
+                                {isAdmin ? (
+                                    <>
+                                        <button className={style.editBtn} onClick={() => handleEditClick(movie)}>Edit</button>
+                                        <button className={style.deleteBtn} onClick={() => handleDelete(movie.id)}>Delete</button>
+                                    </>
+                                ) : (
+                                    <span className={style.viewOnly}>View Only</span>
+                                )}
                             </td>
                         </tr>
                     ))}
