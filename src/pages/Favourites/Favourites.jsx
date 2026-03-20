@@ -8,6 +8,14 @@ export default function Favourites() {
   const [loading,setLoading]=useState(true);
 
   useEffect(()=>{
+
+    const token=localStorage.getItem('token')
+
+    if(!token){
+      window.location.href='/auth/login';
+      return;
+    }
+
     const fetchFavorites=async()=>{
       try{
         const res=await api.get('/favorites');

@@ -31,7 +31,7 @@ export default function Register() {
                 />
                 <input 
                     type="password" 
-                    placeholder="Lozinka" 
+                    placeholder="Password" 
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
                     required 

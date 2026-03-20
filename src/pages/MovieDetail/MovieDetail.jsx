@@ -5,22 +5,58 @@ import style from './MovieDetail.module.css'
 import getYouTubeEmbed from '../../helper/getYouTubeEmbed.js'
 import api from '../../api/axiosInstance'
 import useFetch from '../../hooks/useFetch'
+import { useEffect, useState } from 'react'
 
 export default function MovieDetail() {
     const navigate = useNavigate();
     const { id } = useParams();
+    const [isFavorite, setIsFavorite] = useState(false);
     
     const { data: movie, loading, error, setData } = useFetch(`/movies/${id}?_expand=genre`);
+    useEffect(()=>{
+    const checkFavoriteStatus = async () => {
+                const userId = localStorage.getItem('userId');
+                const token = localStorage.getItem('token');
+                if (!userId || !token) return;
+
+                try {
+                    const res = await api.get(`/favorites?userId=${userId}`);
+                    const found = res.data.some(fav => fav.movieId === Number(id));
+                    setIsFavorite(found);
+                } catch (err) {
+                    console.error("Error checking favorite status:", err);
+                }
+            };
+
+            checkFavoriteStatus();
+        }, [id]);
 
     const handleFavorites = async () => {
-        const newStatus = !movie.isFavorite;
+        const token=localStorage.getItem('token')
+        const userId=localStorage.getItem('userId')
+        if(!token){
+            alert("Sign in to favorite a movie")
+            window.location.href='/auth/login'
+            return;
+        }
         try {
-            await api.patch(`/movies/${id}`, { isFavorite: newStatus });
-            setData({ ...movie, isFavorite: newStatus });
+            if (isFavorite) {
+                        await api.delete(`/favorites/${id}` );
+                        setIsFavorite(false); 
+                    } else {
+                        await api.post(`/favorites`, { 
+                            userId: Number(userId), 
+                            movieId: Number(id) 
+                        });
+                        setIsFavorite(true);
+                    }
+            
         } catch (err) {
             console.error("Error updating favorites:", err);
         }
     }
+
+
 
     if (loading) return <div className={style.loading}>Loading...</div>;
     
@@ -43,7 +79,7 @@ export default function MovieDetail() {
                     <button className={style.favoriteBtn} onClick={handleFavorites}>
                         <img 
                             className={style.favoriteIconDetail} 
-                            src={movie.isFavorite ? favoriteOn : favoriteOff} 
+                            src={isFavorite ? favoriteOn : favoriteOff} 
                             alt="fav" 
                         />
                     </button>

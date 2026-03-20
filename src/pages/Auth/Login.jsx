@@ -12,7 +12,7 @@ export default function Login(){
         try{
             const res=await api.post('/auth/login', {email,password});
             localStorage.setItem('token',res.data.access_token)
-
+            localStorage.setItem('userId',res.data.userId)
 
             alert("Successful login")
             window.location.href = "/";
@@ -24,7 +24,7 @@ export default function Login(){
     return(
         <div className={style.login}>
             <form className={style.form} onSubmit={handleSubmit}>
-                <h2>Prijava</h2>
+                <h2>Sign in</h2>
                 <input 
                 type="email" 
                 placeholder="Email" 
@@ -34,12 +34,12 @@ export default function Login(){
                 />
                 <input 
                 type="password" 
-                placeholder="Lozinka" 
+                placeholder="Password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
                 required 
                 />
-                <button type="submit">Prijavi se</button>
+                <button type="submit">Sign in</button>
             </form>
         </div>
     )
