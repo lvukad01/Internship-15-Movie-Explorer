@@ -34,7 +34,7 @@ export default function MovieDetail() {
         const token=localStorage.getItem('token')
         if(!token){
             alert("Sign in to favorite a movie")
-            navigate('/auth/login')
+            navigate('/login')
             return;
         }
         try {

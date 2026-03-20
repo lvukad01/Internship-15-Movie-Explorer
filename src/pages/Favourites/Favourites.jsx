@@ -14,7 +14,7 @@ export default function Favourites() {
     const token=localStorage.getItem('token')
 
     if(!token){
-      navigate('/auth/login');
+      navigate('/login');
       return;
     }
 
