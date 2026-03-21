@@ -110,6 +110,33 @@
 .editBtn:hover {
     background-color: #2980b9;
 }
+.inputGroup {
+    display: flex;
+    flex-direction: column; 
+    gap: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.inputGroup label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+    text-align: left;
+}
+
+.inputGroup input, 
+.inputGroup textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+}
 
 @media (max-width: 768px) {
     .form {
